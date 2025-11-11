@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>研究文档库 - PDF资料</title>
+    <title>Research Papers</title>
     <style>
         * {
             margin: 0;
@@ -12,295 +12,116 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
             color: #333;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            color: white;
-            margin-bottom: 50px;
-            padding: 40px 20px;
+            background: white;
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #222;
         }
 
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .pdf-list {
+            list-style: none;
         }
 
-        .pdf-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
+        .pdf-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
         }
 
-        .pdf-card {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .pdf-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .pdf-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 30px;
+        .pdf-item:last-child {
+            border-bottom: none;
         }
 
         .pdf-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 15px;
-            line-height: 1.4;
-            word-break: break-word;
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 10px;
         }
 
         .pdf-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 15px;
         }
 
         .btn {
-            flex: 1;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 6px 16px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 0.9rem;
             text-decoration: none;
-            text-align: center;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: #e2e8f0;
-            color: #4a5568;
-        }
-
-        .btn-secondary:hover {
-            background: #cbd5e0;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
+            color: #555;
             background: white;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 1000px;
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: all 0.2s;
         }
 
-        .modal-header {
-            padding: 20px 30px;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .btn:hover {
+            border-color: #999;
+            background: #fafafa;
         }
 
-        .modal-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #2d3748;
-            flex: 1;
-            margin-right: 20px;
-        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
 
-        .close-btn {
-            background: #e2e8f0;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            color: #4a5568;
-        }
-
-        .close-btn:hover {
-            background: #cbd5e0;
-            transform: rotate(90deg);
-        }
-
-        .modal-body {
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .pdf-viewer {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        footer {
-            text-align: center;
-            color: white;
-            padding: 30px 20px;
-            opacity: 0.9;
-        }
-
-        @media (max-width: 768px) {
             h1 {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
-
-            .pdf-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .modal-content {
-                height: 95vh;
-            }
-
-            .modal-header {
-                padding: 15px 20px;
-            }
-
-            .modal-title {
-                font-size: 1rem;
-            }
-        }
-
-        .info-banner {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            padding: 20px 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .info-banner p {
-            color: #4a5568;
-            line-height: 1.6;
-        }
-
-        .info-banner strong {
-            color: #2d3748;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>📚 研究文档库</h1>
-            <p class="subtitle">GARCH、Ito、IV与深度学习研究资料</p>
-        </header>
-
-        <div class="info-banner">
-            <p><strong>💡 使用提示：</strong>点击「在线预览」可在浏览器中直接查看PDF，点击「下载」可保存到本地。</p>
-        </div>
-
-        <div class="pdf-grid">
-            <div class="pdf-card">
-                <div class="pdf-icon">📄</div>
+        <h1>Research Papers</h1>
+        
+        <ul class="pdf-list">
+            <li class="pdf-item">
                 <div class="pdf-title">GARCH Ito IV Presentation (2025-06-08)</div>
                 <div class="pdf-actions">
-                    <a href="GARCH_Ito_IV_Presentation-250608.pdf" class="btn btn-primary" target="_blank">在线预览</a>
-                    <a href="GARCH_Ito_IV_Presentation-250608.pdf" class="btn btn-secondary" download>下载</a>
+                    <a href="GARCH_Ito_IV_Presentation-250608.pdf" class="btn" target="_blank">View</a>
+                    <a href="GARCH_Ito_IV_Presentation-250608.pdf" class="btn" download>Download</a>
                 </div>
-            </div>
+            </li>
 
-            <div class="pdf-card">
-                <div class="pdf-icon">📄</div>
+            <li class="pdf-item">
                 <div class="pdf-title">GARCH Ito IV Presentation (2025-04-26)</div>
                 <div class="pdf-actions">
-                    <a href="garch-ito-iv-presentation-250426.pdf" class="btn btn-primary" target="_blank">在线预览</a>
-                    <a href="garch-ito-iv-presentation-250426.pdf" class="btn btn-secondary" download>下载</a>
+                    <a href="garch-ito-iv-presentation-250426.pdf" class="btn" target="_blank">View</a>
+                    <a href="garch-ito-iv-presentation-250426.pdf" class="btn" download>Download</a>
                 </div>
-            </div>
+            </li>
 
-            <div class="pdf-card">
-                <div class="pdf-icon">📄</div>
+            <li class="pdf-item">
                 <div class="pdf-title">GARCH LSTM IV (2025-11-02)</div>
                 <div class="pdf-actions">
-                    <a href="garch-lstm-iv-251102.pdf" class="btn btn-primary" target="_blank">在线预览</a>
-                    <a href="garch-lstm-iv-251102.pdf" class="btn btn-secondary" download>下载</a>
+                    <a href="garch-lstm-iv-251102.pdf" class="btn" target="_blank">View</a>
+                    <a href="garch-lstm-iv-251102.pdf" class="btn" download>Download</a>
                 </div>
-            </div>
+            </li>
 
-            <div class="pdf-card">
-                <div class="pdf-icon">📄</div>
-                <div class="pdf-title">Mathematica项目 - 23363017 - 乐绎华</div>
+            <li class="pdf-item">
+                <div class="pdf-title">Mathematica Project - 23363017</div>
                 <div class="pdf-actions">
-                    <a href="mathematica项目-23363017-乐绎华.pdf" class="btn btn-primary" target="_blank">在线预览</a>
-                    <a href="mathematica项目-23363017-乐绎华.pdf" class="btn btn-secondary" download>下载</a>
+                    <a href="mathematica-project-23363017-yueyihua.pdf" class="btn" target="_blank">View</a>
+                    <a href="mathematica-project-23363017-yueyihua.pdf" class="btn" download>Download</a>
                 </div>
-            </div>
-        </div>
-
-        <footer>
-            <p>© 2025 研究文档库 | 托管于 GitHub Pages</p>
-        </footer>
+            </li>
+        </ul>
     </div>
 </body>
 </html>
-
