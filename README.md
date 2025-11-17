@@ -8,6 +8,8 @@ A simple static website to host and view PDF research papers.
 - GARCH Ito IV Presentation (2025-04-26)
 - GARCH LSTM IV (2025-11-02)
 - Mathematica Project - 23363017
+- GPA Certificate (2025-11-14)
+- Academic Transcript (2025-11-14)
 
 ## Deploy to GitHub Pages
 
